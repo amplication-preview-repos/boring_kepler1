@@ -13,14 +13,14 @@ import { ProjectList } from "./project/ProjectList";
 import { ProjectCreate } from "./project/ProjectCreate";
 import { ProjectEdit } from "./project/ProjectEdit";
 import { ProjectShow } from "./project/ProjectShow";
-import { PermissionList } from "./permission/PermissionList";
-import { PermissionCreate } from "./permission/PermissionCreate";
-import { PermissionEdit } from "./permission/PermissionEdit";
-import { PermissionShow } from "./permission/PermissionShow";
 import { UserProjectList } from "./userProject/UserProjectList";
 import { UserProjectCreate } from "./userProject/UserProjectCreate";
 import { UserProjectEdit } from "./userProject/UserProjectEdit";
 import { UserProjectShow } from "./userProject/UserProjectShow";
+import { PermissionList } from "./permission/PermissionList";
+import { PermissionCreate } from "./permission/PermissionCreate";
+import { PermissionEdit } from "./permission/PermissionEdit";
+import { PermissionShow } from "./permission/PermissionShow";
 import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
@@ -33,6 +33,10 @@ import { UserTaskList } from "./userTask/UserTaskList";
 import { UserTaskCreate } from "./userTask/UserTaskCreate";
 import { UserTaskEdit } from "./userTask/UserTaskEdit";
 import { UserTaskShow } from "./userTask/UserTaskShow";
+import { ManagerList } from "./manager/ManagerList";
+import { ManagerCreate } from "./manager/ManagerCreate";
+import { ManagerEdit } from "./manager/ManagerEdit";
+import { ManagerShow } from "./manager/ManagerShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -74,18 +78,18 @@ const App = (): React.ReactElement => {
           show={ProjectShow}
         />
         <Resource
-          name="Permission"
-          list={PermissionList}
-          edit={PermissionEdit}
-          create={PermissionCreate}
-          show={PermissionShow}
-        />
-        <Resource
           name="UserProject"
           list={UserProjectList}
           edit={UserProjectEdit}
           create={UserProjectCreate}
           show={UserProjectShow}
+        />
+        <Resource
+          name="Permission"
+          list={PermissionList}
+          edit={PermissionEdit}
+          create={PermissionCreate}
+          show={PermissionShow}
         />
         <Resource
           name="User"
@@ -107,6 +111,13 @@ const App = (): React.ReactElement => {
           edit={UserTaskEdit}
           create={UserTaskCreate}
           show={UserTaskShow}
+        />
+        <Resource
+          name="Manager"
+          list={ManagerList}
+          edit={ManagerEdit}
+          create={ManagerCreate}
+          show={ManagerShow}
         />
       </Admin>
     </div>

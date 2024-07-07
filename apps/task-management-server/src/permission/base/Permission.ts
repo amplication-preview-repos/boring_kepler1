@@ -17,6 +17,7 @@ import {
   MaxLength,
   IsOptional,
   ValidateNested,
+  IsBoolean,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { Role } from "../../role/base/Role";
@@ -79,6 +80,17 @@ class Permission {
   @Type(() => Role)
   @IsOptional()
   role?: Role | null;
+
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Field(() => Boolean, {
+    nullable: true,
+  })
+  canCreateTasks!: boolean | null;
 }
 
 export { Permission as Permission };

@@ -20,6 +20,7 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { PermissionUpdateManyWithoutRolesInput } from "./PermissionUpdateManyWithoutRolesInput";
+import { UserUpdateManyWithoutRolesInput } from "./UserUpdateManyWithoutRolesInput";
 
 @InputType()
 class RoleUpdateInput {
@@ -58,6 +59,18 @@ class RoleUpdateInput {
     nullable: true,
   })
   permissions?: PermissionUpdateManyWithoutRolesInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserUpdateManyWithoutRolesInput,
+  })
+  @ValidateNested()
+  @Type(() => UserUpdateManyWithoutRolesInput)
+  @IsOptional()
+  @Field(() => UserUpdateManyWithoutRolesInput, {
+    nullable: true,
+  })
+  users?: UserUpdateManyWithoutRolesInput;
 }
 
 export { RoleUpdateInput as RoleUpdateInput };

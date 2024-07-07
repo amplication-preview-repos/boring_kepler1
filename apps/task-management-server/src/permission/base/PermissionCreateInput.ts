@@ -16,6 +16,7 @@ import {
   MaxLength,
   IsOptional,
   ValidateNested,
+  IsBoolean,
 } from "class-validator";
 import { RoleWhereUniqueInput } from "../../role/base/RoleWhereUniqueInput";
 import { Type } from "class-transformer";
@@ -57,6 +58,17 @@ class PermissionCreateInput {
     nullable: true,
   })
   role?: RoleWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Field(() => Boolean, {
+    nullable: true,
+  })
+  canCreateTasks?: boolean | null;
 }
 
 export { PermissionCreateInput as PermissionCreateInput };

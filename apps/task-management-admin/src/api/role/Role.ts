@@ -1,5 +1,6 @@
 import { UserProject } from "../userProject/UserProject";
 import { Permission } from "../permission/Permission";
+import { User } from "../user/User";
 
 export type Role = {
   id: string;
@@ -8,4 +9,5 @@ export type Role = {
   userProjects?: Array<UserProject>;
   name: string | null;
   permissions?: Array<Permission>;
+  users?: Array<User>;
 };

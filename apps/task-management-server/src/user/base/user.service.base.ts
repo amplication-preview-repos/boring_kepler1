@@ -17,6 +17,7 @@ import {
   UserProject as PrismaUserProject,
   Task as PrismaTask,
   UserTask as PrismaUserTask,
+  Role as PrismaRole,
 } from "@prisma/client";
 
 import { PasswordService } from "../../auth/password.service";
@@ -99,5 +100,13 @@ export class UserServiceBase {
         where: { id: parentId },
       })
       .userTasks(args);
+  }
+
+  async getRole(parentId: string): Promise<PrismaRole | null> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .role();
   }
 }

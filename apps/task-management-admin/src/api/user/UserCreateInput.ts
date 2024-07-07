@@ -2,6 +2,7 @@ import { InputJsonValue } from "../../types";
 import { UserProjectCreateNestedManyWithoutUsersInput } from "./UserProjectCreateNestedManyWithoutUsersInput";
 import { TaskCreateNestedManyWithoutUsersInput } from "./TaskCreateNestedManyWithoutUsersInput";
 import { UserTaskCreateNestedManyWithoutUsersInput } from "./UserTaskCreateNestedManyWithoutUsersInput";
+import { RoleWhereUniqueInput } from "../role/RoleWhereUniqueInput";
 
 export type UserCreateInput = {
   firstName?: string | null;
@@ -13,4 +14,5 @@ export type UserCreateInput = {
   userProjects?: UserProjectCreateNestedManyWithoutUsersInput;
   tasks?: TaskCreateNestedManyWithoutUsersInput;
   userTasks?: UserTaskCreateNestedManyWithoutUsersInput;
+  role?: RoleWhereUniqueInput | null;
 };

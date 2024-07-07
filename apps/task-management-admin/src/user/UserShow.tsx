@@ -6,9 +6,9 @@ import {
   ShowProps,
   TextField,
   DateField,
+  ReferenceField,
   ReferenceManyField,
   Datagrid,
-  ReferenceField,
 } from "react-admin";
 
 import { USER_TITLE_FIELD } from "./UserTitle";
@@ -28,6 +28,9 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Username" source="username" />
         <TextField label="Email" source="email" />
         <TextField label="Roles" source="roles" />
+        <ReferenceField label="role" source="role.id" reference="Role">
+          <TextField source={ROLE_TITLE_FIELD} />
+        </ReferenceField>
         <ReferenceManyField
           reference="UserProject"
           target="userId"

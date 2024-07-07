@@ -18,6 +18,7 @@ import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { UserProjectListRelationFilter } from "../../userProject/base/UserProjectListRelationFilter";
 import { TaskListRelationFilter } from "../../task/base/TaskListRelationFilter";
 import { UserTaskListRelationFilter } from "../../userTask/base/UserTaskListRelationFilter";
+import { RoleWhereUniqueInput } from "../../role/base/RoleWhereUniqueInput";
 
 @InputType()
 class UserWhereInput {
@@ -111,6 +112,18 @@ class UserWhereInput {
     nullable: true,
   })
   userTasks?: UserTaskListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => RoleWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => RoleWhereUniqueInput)
+  @IsOptional()
+  @Field(() => RoleWhereUniqueInput, {
+    nullable: true,
+  })
+  role?: RoleWhereUniqueInput;
 }
 
 export { UserWhereInput as UserWhereInput };

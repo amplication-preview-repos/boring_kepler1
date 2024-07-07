@@ -7,4 +7,5 @@ export type PermissionOrderByInput = {
   name?: SortOrder;
   description?: SortOrder;
   roleId?: SortOrder;
+  canCreateTasks?: SortOrder;
 };

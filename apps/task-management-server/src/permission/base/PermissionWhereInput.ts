@@ -16,6 +16,7 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { RoleWhereUniqueInput } from "../../role/base/RoleWhereUniqueInput";
+import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 
 @InputType()
 class PermissionWhereInput {
@@ -63,6 +64,17 @@ class PermissionWhereInput {
     nullable: true,
   })
   role?: RoleWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: BooleanNullableFilter,
+  })
+  @Type(() => BooleanNullableFilter)
+  @IsOptional()
+  @Field(() => BooleanNullableFilter, {
+    nullable: true,
+  })
+  canCreateTasks?: BooleanNullableFilter;
 }
 
 export { PermissionWhereInput as PermissionWhereInput };

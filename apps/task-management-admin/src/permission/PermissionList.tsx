@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   List,
   Datagrid,
@@ -6,7 +7,9 @@ import {
   TextField,
   DateField,
   ReferenceField,
+  BooleanField,
 } from "react-admin";
+
 import Pagination from "../Components/Pagination";
 import { ROLE_TITLE_FIELD } from "../role/RoleTitle";
 
@@ -28,6 +31,7 @@ export const PermissionList = (props: ListProps): React.ReactElement => {
         <ReferenceField label="role" source="role.id" reference="Role">
           <TextField source={ROLE_TITLE_FIELD} />
         </ReferenceField>
+        <BooleanField label="can_create_tasks" source="canCreateTasks" />
       </Datagrid>
     </List>
   );

@@ -29,6 +29,7 @@ import { DeleteTaskArgs } from "./DeleteTaskArgs";
 import { UserTaskFindManyArgs } from "../../userTask/base/UserTaskFindManyArgs";
 import { UserTask } from "../../userTask/base/UserTask";
 import { User } from "../../user/base/User";
+import { TaskCreateInput } from "./TaskCreateInput";
 import { TaskService } from "../task.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Task)
@@ -188,5 +189,13 @@ export class TaskResolverBase {
       return null;
     }
     return result;
+  }
+
+  @graphql.Mutation(() => Task)
+  async CreateTaskWithPermissionCheck(
+    @graphql.Args()
+    args: TaskCreateInput
+  ): Promise<Task> {
+    return this.service.CreateTaskWithPermissionCheck(args);
   }
 }

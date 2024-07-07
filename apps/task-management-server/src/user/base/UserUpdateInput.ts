@@ -24,6 +24,7 @@ import { UserProjectUpdateManyWithoutUsersInput } from "./UserProjectUpdateManyW
 import { Type } from "class-transformer";
 import { TaskUpdateManyWithoutUsersInput } from "./TaskUpdateManyWithoutUsersInput";
 import { UserTaskUpdateManyWithoutUsersInput } from "./UserTaskUpdateManyWithoutUsersInput";
+import { RoleWhereUniqueInput } from "../../role/base/RoleWhereUniqueInput";
 
 @InputType()
 class UserUpdateInput {
@@ -129,6 +130,18 @@ class UserUpdateInput {
     nullable: true,
   })
   userTasks?: UserTaskUpdateManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => RoleWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => RoleWhereUniqueInput)
+  @IsOptional()
+  @Field(() => RoleWhereUniqueInput, {
+    nullable: true,
+  })
+  role?: RoleWhereUniqueInput | null;
 }
 
 export { UserUpdateInput as UserUpdateInput };

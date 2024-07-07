@@ -355,4 +355,21 @@ export class TaskControllerBase {
       select: { id: true },
     });
   }
+
+  @common.Post("/create-task-with-permission-check")
+  @swagger.ApiOkResponse({
+    type: Task,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async CreateTaskWithPermissionCheck(
+    @common.Body()
+    body: TaskCreateInput
+  ): Promise<Task> {
+    return this.service.CreateTaskWithPermissionCheck(body);
+  }
 }

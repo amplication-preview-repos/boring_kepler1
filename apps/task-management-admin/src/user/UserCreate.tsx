@@ -8,11 +8,14 @@ import {
   PasswordInput,
   SelectArrayInput,
   ReferenceArrayInput,
+  ReferenceInput,
+  SelectInput,
 } from "react-admin";
 
 import { UserProjectTitle } from "../userProject/UserProjectTitle";
 import { TaskTitle } from "../task/TaskTitle";
 import { UserTaskTitle } from "../userTask/UserTaskTitle";
+import { RoleTitle } from "../role/RoleTitle";
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const UserCreate = (props: CreateProps): React.ReactElement => {
@@ -54,6 +57,9 @@ export const UserCreate = (props: CreateProps): React.ReactElement => {
         >
           <SelectArrayInput optionText={UserTaskTitle} />
         </ReferenceArrayInput>
+        <ReferenceInput source="role.id" reference="Role" label="role">
+          <SelectInput optionText={RoleTitle} />
+        </ReferenceInput>
       </SimpleForm>
     </Create>
   );

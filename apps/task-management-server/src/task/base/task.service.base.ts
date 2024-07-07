@@ -16,6 +16,8 @@ import {
   UserTask as PrismaUserTask,
   User as PrismaUser,
 } from "@prisma/client";
+import { TaskCreateInput } from "./TaskCreateInput";
+import { Task } from "./Task";
 
 export class TaskServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -57,5 +59,8 @@ export class TaskServiceBase {
         where: { id: parentId },
       })
       .user();
+  }
+  async CreateTaskWithPermissionCheck(args: TaskCreateInput): Promise<Task> {
+    throw new Error("Not implemented");
   }
 }

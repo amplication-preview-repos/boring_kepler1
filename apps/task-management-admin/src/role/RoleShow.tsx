@@ -9,6 +9,7 @@ import {
   ReferenceManyField,
   Datagrid,
   ReferenceField,
+  BooleanField,
 } from "react-admin";
 
 import { USER_TITLE_FIELD } from "../user/UserTitle";
@@ -58,6 +59,22 @@ export const RoleShow = (props: ShowProps): React.ReactElement => {
             <DateField source="updatedAt" label="Updated At" />
             <TextField label="name" source="name" />
             <TextField label="description" source="description" />
+            <ReferenceField label="role" source="role.id" reference="Role">
+              <TextField source={ROLE_TITLE_FIELD} />
+            </ReferenceField>
+            <BooleanField label="can_create_tasks" source="canCreateTasks" />
+          </Datagrid>
+        </ReferenceManyField>
+        <ReferenceManyField reference="User" target="roleId" label="Users">
+          <Datagrid rowClick="show">
+            <TextField label="ID" source="id" />
+            <DateField source="createdAt" label="Created At" />
+            <DateField source="updatedAt" label="Updated At" />
+            <TextField label="First Name" source="firstName" />
+            <TextField label="Last Name" source="lastName" />
+            <TextField label="Username" source="username" />
+            <TextField label="Email" source="email" />
+            <TextField label="Roles" source="roles" />
             <ReferenceField label="role" source="role.id" reference="Role">
               <TextField source={ROLE_TITLE_FIELD} />
             </ReferenceField>

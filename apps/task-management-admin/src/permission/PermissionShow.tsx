@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   Show,
   SimpleShowLayout,
@@ -6,7 +7,9 @@ import {
   TextField,
   DateField,
   ReferenceField,
+  BooleanField,
 } from "react-admin";
+
 import { ROLE_TITLE_FIELD } from "../role/RoleTitle";
 
 export const PermissionShow = (props: ShowProps): React.ReactElement => {
@@ -21,6 +24,7 @@ export const PermissionShow = (props: ShowProps): React.ReactElement => {
         <ReferenceField label="role" source="role.id" reference="Role">
           <TextField source={ROLE_TITLE_FIELD} />
         </ReferenceField>
+        <BooleanField label="can_create_tasks" source="canCreateTasks" />
       </SimpleShowLayout>
     </Show>
   );

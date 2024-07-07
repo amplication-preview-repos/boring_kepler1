@@ -3,6 +3,7 @@ import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { UserProjectListRelationFilter } from "../userProject/UserProjectListRelationFilter";
 import { TaskListRelationFilter } from "../task/TaskListRelationFilter";
 import { UserTaskListRelationFilter } from "../userTask/UserTaskListRelationFilter";
+import { RoleWhereUniqueInput } from "../role/RoleWhereUniqueInput";
 
 export type UserWhereInput = {
   id?: StringFilter;
@@ -13,4 +14,5 @@ export type UserWhereInput = {
   userProjects?: UserProjectListRelationFilter;
   tasks?: TaskListRelationFilter;
   userTasks?: UserTaskListRelationFilter;
+  role?: RoleWhereUniqueInput;
 };

@@ -20,6 +20,7 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { PermissionCreateNestedManyWithoutRolesInput } from "./PermissionCreateNestedManyWithoutRolesInput";
+import { UserCreateNestedManyWithoutRolesInput } from "./UserCreateNestedManyWithoutRolesInput";
 
 @InputType()
 class RoleCreateInput {
@@ -58,6 +59,18 @@ class RoleCreateInput {
     nullable: true,
   })
   permissions?: PermissionCreateNestedManyWithoutRolesInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserCreateNestedManyWithoutRolesInput,
+  })
+  @ValidateNested()
+  @Type(() => UserCreateNestedManyWithoutRolesInput)
+  @IsOptional()
+  @Field(() => UserCreateNestedManyWithoutRolesInput, {
+    nullable: true,
+  })
+  users?: UserCreateNestedManyWithoutRolesInput;
 }
 
 export { RoleCreateInput as RoleCreateInput };

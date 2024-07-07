@@ -17,6 +17,7 @@ import { IsOptional, ValidateNested } from "class-validator";
 import { UserProjectListRelationFilter } from "../../userProject/base/UserProjectListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { PermissionListRelationFilter } from "../../permission/base/PermissionListRelationFilter";
+import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
 
 @InputType()
 class RoleWhereInput {
@@ -65,6 +66,18 @@ class RoleWhereInput {
     nullable: true,
   })
   permissions?: PermissionListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => UserListRelationFilter)
+  @IsOptional()
+  @Field(() => UserListRelationFilter, {
+    nullable: true,
+  })
+  users?: UserListRelationFilter;
 }
 
 export { RoleWhereInput as RoleWhereInput };

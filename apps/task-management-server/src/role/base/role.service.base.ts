@@ -16,6 +16,7 @@ import {
   Role as PrismaRole,
   UserProject as PrismaUserProject,
   Permission as PrismaPermission,
+  User as PrismaUser,
 } from "@prisma/client";
 
 export class RoleServiceBase {
@@ -61,5 +62,16 @@ export class RoleServiceBase {
         where: { id: parentId },
       })
       .permissions(args);
+  }
+
+  async findUsers(
+    parentId: string,
+    args: Prisma.UserFindManyArgs
+  ): Promise<PrismaUser[]> {
+    return this.prisma.role
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .users(args);
   }
 }

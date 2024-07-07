@@ -70,6 +70,8 @@ export class PermissionControllerBase {
             id: true,
           },
         },
+
+        canCreateTasks: true,
       },
     });
   }
@@ -102,6 +104,8 @@ export class PermissionControllerBase {
             id: true,
           },
         },
+
+        canCreateTasks: true,
       },
     });
   }
@@ -135,6 +139,8 @@ export class PermissionControllerBase {
             id: true,
           },
         },
+
+        canCreateTasks: true,
       },
     });
     if (result === null) {
@@ -185,6 +191,8 @@ export class PermissionControllerBase {
               id: true,
             },
           },
+
+          canCreateTasks: true,
         },
       });
     } catch (error) {
@@ -226,6 +234,8 @@ export class PermissionControllerBase {
               id: true,
             },
           },
+
+          canCreateTasks: true,
         },
       });
     } catch (error) {

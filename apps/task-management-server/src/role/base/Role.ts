@@ -21,6 +21,7 @@ import {
 import { Type } from "class-transformer";
 import { UserProject } from "../../userProject/base/UserProject";
 import { Permission } from "../../permission/base/Permission";
+import { User } from "../../user/base/User";
 
 @ObjectType()
 class Role {
@@ -77,6 +78,15 @@ class Role {
   @Type(() => Permission)
   @IsOptional()
   permissions?: Array<Permission>;
+
+  @ApiProperty({
+    required: false,
+    type: () => [User],
+  })
+  @ValidateNested()
+  @Type(() => User)
+  @IsOptional()
+  users?: Array<User>;
 }
 
 export { Role as Role };

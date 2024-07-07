@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   Edit,
   SimpleForm,
@@ -6,7 +7,9 @@ import {
   TextInput,
   ReferenceInput,
   SelectInput,
+  BooleanInput,
 } from "react-admin";
+
 import { RoleTitle } from "../role/RoleTitle";
 
 export const PermissionEdit = (props: EditProps): React.ReactElement => {
@@ -18,6 +21,7 @@ export const PermissionEdit = (props: EditProps): React.ReactElement => {
         <ReferenceInput source="role.id" reference="Role" label="role">
           <SelectInput optionText={RoleTitle} />
         </ReferenceInput>
+        <BooleanInput label="can_create_tasks" source="canCreateTasks" />
       </SimpleForm>
     </Edit>
   );

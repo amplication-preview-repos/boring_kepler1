@@ -25,6 +25,7 @@ import { JsonValue } from "type-fest";
 import { UserProject } from "../../userProject/base/UserProject";
 import { Task } from "../../task/base/Task";
 import { UserTask } from "../../userTask/base/UserTask";
+import { Role } from "../../role/base/Role";
 
 @ObjectType()
 class User {
@@ -128,6 +129,15 @@ class User {
   @Type(() => UserTask)
   @IsOptional()
   userTasks?: Array<UserTask>;
+
+  @ApiProperty({
+    required: false,
+    type: () => Role,
+  })
+  @ValidateNested()
+  @Type(() => Role)
+  @IsOptional()
+  role?: Role | null;
 }
 
 export { User as User };

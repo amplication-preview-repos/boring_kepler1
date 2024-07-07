@@ -24,6 +24,7 @@ import { UserProjectCreateNestedManyWithoutUsersInput } from "./UserProjectCreat
 import { Type } from "class-transformer";
 import { TaskCreateNestedManyWithoutUsersInput } from "./TaskCreateNestedManyWithoutUsersInput";
 import { UserTaskCreateNestedManyWithoutUsersInput } from "./UserTaskCreateNestedManyWithoutUsersInput";
+import { RoleWhereUniqueInput } from "../../role/base/RoleWhereUniqueInput";
 
 @InputType()
 class UserCreateInput {
@@ -120,6 +121,18 @@ class UserCreateInput {
     nullable: true,
   })
   userTasks?: UserTaskCreateNestedManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => RoleWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => RoleWhereUniqueInput)
+  @IsOptional()
+  @Field(() => RoleWhereUniqueInput, {
+    nullable: true,
+  })
+  role?: RoleWhereUniqueInput | null;
 }
 
 export { UserCreateInput as UserCreateInput };
