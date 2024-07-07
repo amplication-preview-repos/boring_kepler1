@@ -14,9 +14,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
+import { UserProjectListRelationFilter } from "../../userProject/base/UserProjectListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { PermissionListRelationFilter } from "../../permission/base/PermissionListRelationFilter";
-import { UserProjectListRelationFilter } from "../../userProject/base/UserProjectListRelationFilter";
 
 @InputType()
 class RoleWhereInput {
@@ -30,6 +30,18 @@ class RoleWhereInput {
     nullable: true,
   })
   id?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserProjectListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => UserProjectListRelationFilter)
+  @IsOptional()
+  @Field(() => UserProjectListRelationFilter, {
+    nullable: true,
+  })
+  userProjects?: UserProjectListRelationFilter;
 
   @ApiProperty({
     required: false,
@@ -53,18 +65,6 @@ class RoleWhereInput {
     nullable: true,
   })
   permissions?: PermissionListRelationFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserProjectListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => UserProjectListRelationFilter)
-  @IsOptional()
-  @Field(() => UserProjectListRelationFilter, {
-    nullable: true,
-  })
-  userProjects?: UserProjectListRelationFilter;
 }
 
 export { RoleWhereInput as RoleWhereInput };

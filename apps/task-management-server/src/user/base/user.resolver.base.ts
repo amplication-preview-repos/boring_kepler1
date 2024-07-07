@@ -28,6 +28,10 @@ import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
 import { UserProjectFindManyArgs } from "../../userProject/base/UserProjectFindManyArgs";
 import { UserProject } from "../../userProject/base/UserProject";
+import { TaskFindManyArgs } from "../../task/base/TaskFindManyArgs";
+import { Task } from "../../task/base/Task";
+import { UserTaskFindManyArgs } from "../../userTask/base/UserTaskFindManyArgs";
+import { UserTask } from "../../userTask/base/UserTask";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -146,6 +150,46 @@ export class UserResolverBase {
     @graphql.Args() args: UserProjectFindManyArgs
   ): Promise<UserProject[]> {
     const results = await this.service.findUserProjects(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Task], { name: "tasks" })
+  @nestAccessControl.UseRoles({
+    resource: "Task",
+    action: "read",
+    possession: "any",
+  })
+  async findTasks(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: TaskFindManyArgs
+  ): Promise<Task[]> {
+    const results = await this.service.findTasks(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [UserTask], { name: "userTasks" })
+  @nestAccessControl.UseRoles({
+    resource: "UserTask",
+    action: "read",
+    possession: "any",
+  })
+  async findUserTasks(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: UserTaskFindManyArgs
+  ): Promise<UserTask[]> {
+    const results = await this.service.findUserTasks(parent.id, args);
 
     if (!results) {
       return [];

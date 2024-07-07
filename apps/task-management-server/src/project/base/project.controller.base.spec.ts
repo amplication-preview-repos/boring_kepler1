@@ -18,38 +18,38 @@ import { ProjectService } from "../project.service";
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
-  createdAt: new Date(),
-  description: "exampleDescription",
   id: "exampleId",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  description: "exampleDescription",
   name: "exampleName",
   owner: "exampleOwner",
-  updatedAt: new Date(),
 };
 const CREATE_RESULT = {
-  createdAt: new Date(),
-  description: "exampleDescription",
   id: "exampleId",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  description: "exampleDescription",
   name: "exampleName",
   owner: "exampleOwner",
-  updatedAt: new Date(),
 };
 const FIND_MANY_RESULT = [
   {
-    createdAt: new Date(),
-    description: "exampleDescription",
     id: "exampleId",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    description: "exampleDescription",
     name: "exampleName",
     owner: "exampleOwner",
-    updatedAt: new Date(),
   },
 ];
 const FIND_ONE_RESULT = {
-  createdAt: new Date(),
-  description: "exampleDescription",
   id: "exampleId",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  description: "exampleDescription",
   name: "exampleName",
   owner: "exampleOwner",
-  updatedAt: new Date(),
 };
 
 const service = {

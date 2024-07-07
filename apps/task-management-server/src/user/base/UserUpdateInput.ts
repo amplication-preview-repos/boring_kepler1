@@ -13,8 +13,8 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import {
   IsString,
-  IsOptional,
   MaxLength,
+  IsOptional,
   ValidateNested,
 } from "class-validator";
 import { IsJSONValue } from "../../validators";
@@ -22,20 +22,11 @@ import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
 import { UserProjectUpdateManyWithoutUsersInput } from "./UserProjectUpdateManyWithoutUsersInput";
 import { Type } from "class-transformer";
+import { TaskUpdateManyWithoutUsersInput } from "./TaskUpdateManyWithoutUsersInput";
+import { UserTaskUpdateManyWithoutUsersInput } from "./UserTaskUpdateManyWithoutUsersInput";
 
 @InputType()
 class UserUpdateInput {
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  email?: string | null;
-
   @ApiProperty({
     required: false,
     type: String,
@@ -69,6 +60,28 @@ class UserUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
+  username?: string;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  email?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
   password?: string;
 
   @ApiProperty({
@@ -83,17 +96,6 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  username?: string;
-
-  @ApiProperty({
-    required: false,
     type: () => UserProjectUpdateManyWithoutUsersInput,
   })
   @ValidateNested()
@@ -103,6 +105,30 @@ class UserUpdateInput {
     nullable: true,
   })
   userProjects?: UserProjectUpdateManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => TaskUpdateManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => TaskUpdateManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => TaskUpdateManyWithoutUsersInput, {
+    nullable: true,
+  })
+  tasks?: TaskUpdateManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserTaskUpdateManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => UserTaskUpdateManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => UserTaskUpdateManyWithoutUsersInput, {
+    nullable: true,
+  })
+  userTasks?: UserTaskUpdateManyWithoutUsersInput;
 }
 
 export { UserUpdateInput as UserUpdateInput };

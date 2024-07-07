@@ -11,15 +11,18 @@ import {
 } from "react-admin";
 
 import { UserProjectTitle } from "../userProject/UserProjectTitle";
+import { TaskTitle } from "../task/TaskTitle";
+import { UserTaskTitle } from "../userTask/UserTaskTitle";
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const UserEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
-        <TextInput label="Email" source="email" type="email" />
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
+        <TextInput label="Username" source="username" />
+        <TextInput label="Email" source="email" type="email" />
         <PasswordInput label="Password" source="password" />
         <SelectArrayInput
           source="roles"
@@ -27,7 +30,6 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           optionText="label"
           optionValue="value"
         />
-        <TextInput label="Username" source="username" />
         <ReferenceArrayInput
           source="userProjects"
           reference="UserProject"
@@ -35,6 +37,22 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           format={(value: any) => value && value.map((v: any) => v.id)}
         >
           <SelectArrayInput optionText={UserProjectTitle} />
+        </ReferenceArrayInput>
+        <ReferenceArrayInput
+          source="tasks"
+          reference="Task"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={TaskTitle} />
+        </ReferenceArrayInput>
+        <ReferenceArrayInput
+          source="userTasks"
+          reference="UserTask"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={UserTaskTitle} />
         </ReferenceArrayInput>
       </SimpleForm>
     </Edit>

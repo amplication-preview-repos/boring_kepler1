@@ -14,8 +14,8 @@ import { PrismaService } from "../../prisma/prisma.service";
 import {
   Prisma,
   Role as PrismaRole,
-  Permission as PrismaPermission,
   UserProject as PrismaUserProject,
+  Permission as PrismaPermission,
 } from "@prisma/client";
 
 export class RoleServiceBase {
@@ -41,17 +41,6 @@ export class RoleServiceBase {
     return this.prisma.role.delete(args);
   }
 
-  async findPermissions(
-    parentId: string,
-    args: Prisma.PermissionFindManyArgs
-  ): Promise<PrismaPermission[]> {
-    return this.prisma.role
-      .findUniqueOrThrow({
-        where: { id: parentId },
-      })
-      .permissions(args);
-  }
-
   async findUserProjects(
     parentId: string,
     args: Prisma.UserProjectFindManyArgs
@@ -61,5 +50,16 @@ export class RoleServiceBase {
         where: { id: parentId },
       })
       .userProjects(args);
+  }
+
+  async findPermissions(
+    parentId: string,
+    args: Prisma.PermissionFindManyArgs
+  ): Promise<PrismaPermission[]> {
+    return this.prisma.role
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .permissions(args);
   }
 }

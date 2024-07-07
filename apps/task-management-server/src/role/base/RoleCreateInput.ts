@@ -11,18 +11,30 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
+import { UserProjectCreateNestedManyWithoutRolesInput } from "./UserProjectCreateNestedManyWithoutRolesInput";
 import {
+  ValidateNested,
+  IsOptional,
   IsString,
   MaxLength,
-  IsOptional,
-  ValidateNested,
 } from "class-validator";
-import { PermissionCreateNestedManyWithoutRolesInput } from "./PermissionCreateNestedManyWithoutRolesInput";
 import { Type } from "class-transformer";
-import { UserProjectCreateNestedManyWithoutRolesInput } from "./UserProjectCreateNestedManyWithoutRolesInput";
+import { PermissionCreateNestedManyWithoutRolesInput } from "./PermissionCreateNestedManyWithoutRolesInput";
 
 @InputType()
 class RoleCreateInput {
+  @ApiProperty({
+    required: false,
+    type: () => UserProjectCreateNestedManyWithoutRolesInput,
+  })
+  @ValidateNested()
+  @Type(() => UserProjectCreateNestedManyWithoutRolesInput)
+  @IsOptional()
+  @Field(() => UserProjectCreateNestedManyWithoutRolesInput, {
+    nullable: true,
+  })
+  userProjects?: UserProjectCreateNestedManyWithoutRolesInput;
+
   @ApiProperty({
     required: false,
     type: String,
@@ -46,18 +58,6 @@ class RoleCreateInput {
     nullable: true,
   })
   permissions?: PermissionCreateNestedManyWithoutRolesInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserProjectCreateNestedManyWithoutRolesInput,
-  })
-  @ValidateNested()
-  @Type(() => UserProjectCreateNestedManyWithoutRolesInput)
-  @IsOptional()
-  @Field(() => UserProjectCreateNestedManyWithoutRolesInput, {
-    nullable: true,
-  })
-  userProjects?: UserProjectCreateNestedManyWithoutRolesInput;
 }
 
 export { RoleCreateInput as RoleCreateInput };

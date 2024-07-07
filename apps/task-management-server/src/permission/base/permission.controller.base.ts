@@ -59,18 +59,17 @@ export class PermissionControllerBase {
           : undefined,
       },
       select: {
-        createdAt: true,
-        description: true,
         id: true,
+        createdAt: true,
+        updatedAt: true,
         name: true,
+        description: true,
 
         role: {
           select: {
             id: true,
           },
         },
-
-        updatedAt: true,
       },
     });
   }
@@ -92,18 +91,17 @@ export class PermissionControllerBase {
     return this.service.permissions({
       ...args,
       select: {
-        createdAt: true,
-        description: true,
         id: true,
+        createdAt: true,
+        updatedAt: true,
         name: true,
+        description: true,
 
         role: {
           select: {
             id: true,
           },
         },
-
-        updatedAt: true,
       },
     });
   }
@@ -126,18 +124,17 @@ export class PermissionControllerBase {
     const result = await this.service.permission({
       where: params,
       select: {
-        createdAt: true,
-        description: true,
         id: true,
+        createdAt: true,
+        updatedAt: true,
         name: true,
+        description: true,
 
         role: {
           select: {
             id: true,
           },
         },
-
-        updatedAt: true,
       },
     });
     if (result === null) {
@@ -177,18 +174,17 @@ export class PermissionControllerBase {
             : undefined,
         },
         select: {
-          createdAt: true,
-          description: true,
           id: true,
+          createdAt: true,
+          updatedAt: true,
           name: true,
+          description: true,
 
           role: {
             select: {
               id: true,
             },
           },
-
-          updatedAt: true,
         },
       });
     } catch (error) {
@@ -219,18 +215,17 @@ export class PermissionControllerBase {
       return await this.service.deletePermission({
         where: params,
         select: {
-          createdAt: true,
-          description: true,
           id: true,
+          createdAt: true,
+          updatedAt: true,
           name: true,
+          description: true,
 
           role: {
             select: {
               id: true,
             },
           },
-
-          updatedAt: true,
         },
       });
     } catch (error) {

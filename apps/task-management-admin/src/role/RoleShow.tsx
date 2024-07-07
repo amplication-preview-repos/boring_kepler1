@@ -4,49 +4,37 @@ import {
   Show,
   SimpleShowLayout,
   ShowProps,
-  DateField,
   TextField,
+  DateField,
   ReferenceManyField,
   Datagrid,
   ReferenceField,
 } from "react-admin";
 
-import { ROLE_TITLE_FIELD } from "./RoleTitle";
-import { PROJECT_TITLE_FIELD } from "../project/ProjectTitle";
 import { USER_TITLE_FIELD } from "../user/UserTitle";
+import { PROJECT_TITLE_FIELD } from "../project/ProjectTitle";
+import { ROLE_TITLE_FIELD } from "./RoleTitle";
 
 export const RoleShow = (props: ShowProps): React.ReactElement => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
-        <DateField source="createdAt" label="Created At" />
         <TextField label="ID" source="id" />
-        <TextField label="name" source="name" />
+        <DateField source="createdAt" label="Created At" />
         <DateField source="updatedAt" label="Updated At" />
-        <ReferenceManyField
-          reference="Permission"
-          target="roleId"
-          label="Permissions"
-        >
-          <Datagrid rowClick="show">
-            <DateField source="createdAt" label="Created At" />
-            <TextField label="description" source="description" />
-            <TextField label="ID" source="id" />
-            <TextField label="name" source="name" />
-            <ReferenceField label="role" source="role.id" reference="Role">
-              <TextField source={ROLE_TITLE_FIELD} />
-            </ReferenceField>
-            <DateField source="updatedAt" label="Updated At" />
-          </Datagrid>
-        </ReferenceManyField>
+        <TextField label="name" source="name" />
         <ReferenceManyField
           reference="UserProject"
           target="roleId"
           label="UserProjects"
         >
           <Datagrid rowClick="show">
-            <DateField source="createdAt" label="Created At" />
             <TextField label="ID" source="id" />
+            <DateField source="createdAt" label="Created At" />
+            <DateField source="updatedAt" label="Updated At" />
+            <ReferenceField label="user" source="user.id" reference="User">
+              <TextField source={USER_TITLE_FIELD} />
+            </ReferenceField>
             <ReferenceField
               label="project"
               source="project.id"
@@ -57,9 +45,21 @@ export const RoleShow = (props: ShowProps): React.ReactElement => {
             <ReferenceField label="role" source="role.id" reference="Role">
               <TextField source={ROLE_TITLE_FIELD} />
             </ReferenceField>
+          </Datagrid>
+        </ReferenceManyField>
+        <ReferenceManyField
+          reference="Permission"
+          target="roleId"
+          label="Permissions"
+        >
+          <Datagrid rowClick="show">
+            <TextField label="ID" source="id" />
+            <DateField source="createdAt" label="Created At" />
             <DateField source="updatedAt" label="Updated At" />
-            <ReferenceField label="user" source="user.id" reference="User">
-              <TextField source={USER_TITLE_FIELD} />
+            <TextField label="name" source="name" />
+            <TextField label="description" source="description" />
+            <ReferenceField label="role" source="role.id" reference="Role">
+              <TextField source={ROLE_TITLE_FIELD} />
             </ReferenceField>
           </Datagrid>
         </ReferenceManyField>

@@ -54,12 +54,12 @@ export class ProjectControllerBase {
     return await this.service.createProject({
       data: data,
       select: {
-        createdAt: true,
-        description: true,
         id: true,
+        createdAt: true,
+        updatedAt: true,
+        description: true,
         name: true,
         owner: true,
-        updatedAt: true,
       },
     });
   }
@@ -81,12 +81,12 @@ export class ProjectControllerBase {
     return this.service.projects({
       ...args,
       select: {
-        createdAt: true,
-        description: true,
         id: true,
+        createdAt: true,
+        updatedAt: true,
+        description: true,
         name: true,
         owner: true,
-        updatedAt: true,
       },
     });
   }
@@ -109,12 +109,12 @@ export class ProjectControllerBase {
     const result = await this.service.project({
       where: params,
       select: {
-        createdAt: true,
-        description: true,
         id: true,
+        createdAt: true,
+        updatedAt: true,
+        description: true,
         name: true,
         owner: true,
-        updatedAt: true,
       },
     });
     if (result === null) {
@@ -146,12 +146,12 @@ export class ProjectControllerBase {
         where: params,
         data: data,
         select: {
-          createdAt: true,
-          description: true,
           id: true,
+          createdAt: true,
+          updatedAt: true,
+          description: true,
           name: true,
           owner: true,
-          updatedAt: true,
         },
       });
     } catch (error) {
@@ -182,12 +182,12 @@ export class ProjectControllerBase {
       return await this.service.deleteProject({
         where: params,
         select: {
-          createdAt: true,
-          description: true,
           id: true,
+          createdAt: true,
+          updatedAt: true,
+          description: true,
           name: true,
           owner: true,
-          updatedAt: true,
         },
       });
     } catch (error) {
@@ -216,8 +216,15 @@ export class ProjectControllerBase {
     const results = await this.service.findUserProjects(params.id, {
       ...query,
       select: {
-        createdAt: true,
         id: true,
+        createdAt: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
 
         project: {
           select: {
@@ -226,14 +233,6 @@ export class ProjectControllerBase {
         },
 
         role: {
-          select: {
-            id: true,
-          },
-        },
-
-        updatedAt: true,
-
-        user: {
           select: {
             id: true,
           },

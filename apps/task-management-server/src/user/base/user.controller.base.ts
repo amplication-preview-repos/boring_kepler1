@@ -29,6 +29,12 @@ import { UserUpdateInput } from "./UserUpdateInput";
 import { UserProjectFindManyArgs } from "../../userProject/base/UserProjectFindManyArgs";
 import { UserProject } from "../../userProject/base/UserProject";
 import { UserProjectWhereUniqueInput } from "../../userProject/base/UserProjectWhereUniqueInput";
+import { TaskFindManyArgs } from "../../task/base/TaskFindManyArgs";
+import { Task } from "../../task/base/Task";
+import { TaskWhereUniqueInput } from "../../task/base/TaskWhereUniqueInput";
+import { UserTaskFindManyArgs } from "../../userTask/base/UserTaskFindManyArgs";
+import { UserTask } from "../../userTask/base/UserTask";
+import { UserTaskWhereUniqueInput } from "../../userTask/base/UserTaskWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -52,14 +58,14 @@ export class UserControllerBase {
     return await this.service.createUser({
       data: data,
       select: {
-        createdAt: true,
-        email: true,
-        firstName: true,
         id: true,
-        lastName: true,
-        roles: true,
+        createdAt: true,
         updatedAt: true,
+        firstName: true,
+        lastName: true,
         username: true,
+        email: true,
+        roles: true,
       },
     });
   }
@@ -81,14 +87,14 @@ export class UserControllerBase {
     return this.service.users({
       ...args,
       select: {
-        createdAt: true,
-        email: true,
-        firstName: true,
         id: true,
-        lastName: true,
-        roles: true,
+        createdAt: true,
         updatedAt: true,
+        firstName: true,
+        lastName: true,
         username: true,
+        email: true,
+        roles: true,
       },
     });
   }
@@ -111,14 +117,14 @@ export class UserControllerBase {
     const result = await this.service.user({
       where: params,
       select: {
-        createdAt: true,
-        email: true,
-        firstName: true,
         id: true,
-        lastName: true,
-        roles: true,
+        createdAt: true,
         updatedAt: true,
+        firstName: true,
+        lastName: true,
         username: true,
+        email: true,
+        roles: true,
       },
     });
     if (result === null) {
@@ -150,14 +156,14 @@ export class UserControllerBase {
         where: params,
         data: data,
         select: {
-          createdAt: true,
-          email: true,
-          firstName: true,
           id: true,
-          lastName: true,
-          roles: true,
+          createdAt: true,
           updatedAt: true,
+          firstName: true,
+          lastName: true,
           username: true,
+          email: true,
+          roles: true,
         },
       });
     } catch (error) {
@@ -188,14 +194,14 @@ export class UserControllerBase {
       return await this.service.deleteUser({
         where: params,
         select: {
-          createdAt: true,
-          email: true,
-          firstName: true,
           id: true,
-          lastName: true,
-          roles: true,
+          createdAt: true,
           updatedAt: true,
+          firstName: true,
+          lastName: true,
           username: true,
+          email: true,
+          roles: true,
         },
       });
     } catch (error) {
@@ -224,8 +230,15 @@ export class UserControllerBase {
     const results = await this.service.findUserProjects(params.id, {
       ...query,
       select: {
-        createdAt: true,
         id: true,
+        createdAt: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
 
         project: {
           select: {
@@ -234,14 +247,6 @@ export class UserControllerBase {
         },
 
         role: {
-          select: {
-            id: true,
-          },
-        },
-
-        updatedAt: true,
-
-        user: {
           select: {
             id: true,
           },
@@ -312,6 +317,218 @@ export class UserControllerBase {
   ): Promise<void> {
     const data = {
       userProjects: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/tasks")
+  @ApiNestedQuery(TaskFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Task",
+    action: "read",
+    possession: "any",
+  })
+  async findTasks(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Task[]> {
+    const query = plainToClass(TaskFindManyArgs, request.query);
+    const results = await this.service.findTasks(params.id, {
+      ...query,
+      select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        dueDate: true,
+        status: true,
+        title: true,
+        description: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/tasks")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectTasks(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: TaskWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      tasks: {
+        connect: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/tasks")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateTasks(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: TaskWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      tasks: {
+        set: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/tasks")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectTasks(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: TaskWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      tasks: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/userTasks")
+  @ApiNestedQuery(UserTaskFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "UserTask",
+    action: "read",
+    possession: "any",
+  })
+  async findUserTasks(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<UserTask[]> {
+    const query = plainToClass(UserTaskFindManyArgs, request.query);
+    const results = await this.service.findUserTasks(params.id, {
+      ...query,
+      select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+
+        task: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/userTasks")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectUserTasks(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: UserTaskWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      userTasks: {
+        connect: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/userTasks")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateUserTasks(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: UserTaskWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      userTasks: {
+        set: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/userTasks")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectUserTasks(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: UserTaskWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      userTasks: {
         disconnect: body,
       },
     };

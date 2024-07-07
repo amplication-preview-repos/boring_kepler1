@@ -26,9 +26,9 @@ import { UserProjectFindUniqueArgs } from "./UserProjectFindUniqueArgs";
 import { CreateUserProjectArgs } from "./CreateUserProjectArgs";
 import { UpdateUserProjectArgs } from "./UpdateUserProjectArgs";
 import { DeleteUserProjectArgs } from "./DeleteUserProjectArgs";
+import { User } from "../../user/base/User";
 import { Project } from "../../project/base/Project";
 import { Role } from "../../role/base/Role";
-import { User } from "../../user/base/User";
 import { UserProjectService } from "../userProject.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => UserProject)
@@ -98,6 +98,12 @@ export class UserProjectResolverBase {
       data: {
         ...args.data,
 
+        user: args.data.user
+          ? {
+              connect: args.data.user,
+            }
+          : undefined,
+
         project: args.data.project
           ? {
               connect: args.data.project,
@@ -107,12 +113,6 @@ export class UserProjectResolverBase {
         role: args.data.role
           ? {
               connect: args.data.role,
-            }
-          : undefined,
-
-        user: args.data.user
-          ? {
-              connect: args.data.user,
             }
           : undefined,
       },
@@ -135,6 +135,12 @@ export class UserProjectResolverBase {
         data: {
           ...args.data,
 
+          user: args.data.user
+            ? {
+                connect: args.data.user,
+              }
+            : undefined,
+
           project: args.data.project
             ? {
                 connect: args.data.project,
@@ -144,12 +150,6 @@ export class UserProjectResolverBase {
           role: args.data.role
             ? {
                 connect: args.data.role,
-              }
-            : undefined,
-
-          user: args.data.user
-            ? {
-                connect: args.data.user,
               }
             : undefined,
         },
@@ -186,6 +186,25 @@ export class UserProjectResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => User, {
+    nullable: true,
+    name: "user",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
+  async getUser(@graphql.Parent() parent: UserProject): Promise<User | null> {
+    const result = await this.service.getUser(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Project, {
     nullable: true,
     name: "project",
@@ -218,25 +237,6 @@ export class UserProjectResolverBase {
   })
   async getRole(@graphql.Parent() parent: UserProject): Promise<Role | null> {
     const result = await this.service.getRole(parent.id);
-
-    if (!result) {
-      return null;
-    }
-    return result;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => User, {
-    nullable: true,
-    name: "user",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
-  async getUser(@graphql.Parent() parent: UserProject): Promise<User | null> {
-    const result = await this.service.getUser(parent.id);
 
     if (!result) {
       return null;

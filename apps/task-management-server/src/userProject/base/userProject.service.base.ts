@@ -14,9 +14,9 @@ import { PrismaService } from "../../prisma/prisma.service";
 import {
   Prisma,
   UserProject as PrismaUserProject,
+  User as PrismaUser,
   Project as PrismaProject,
   Role as PrismaRole,
-  User as PrismaUser,
 } from "@prisma/client";
 
 export class UserProjectServiceBase {
@@ -54,6 +54,14 @@ export class UserProjectServiceBase {
     return this.prisma.userProject.delete(args);
   }
 
+  async getUser(parentId: string): Promise<PrismaUser | null> {
+    return this.prisma.userProject
+      .findUnique({
+        where: { id: parentId },
+      })
+      .user();
+  }
+
   async getProject(parentId: string): Promise<PrismaProject | null> {
     return this.prisma.userProject
       .findUnique({
@@ -68,13 +76,5 @@ export class UserProjectServiceBase {
         where: { id: parentId },
       })
       .role();
-  }
-
-  async getUser(parentId: string): Promise<PrismaUser | null> {
-    return this.prisma.userProject
-      .findUnique({
-        where: { id: parentId },
-      })
-      .user();
   }
 }

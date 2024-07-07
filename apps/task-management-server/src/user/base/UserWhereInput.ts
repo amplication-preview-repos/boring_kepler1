@@ -11,24 +11,26 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { StringFilter } from "../../util/StringFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { UserProjectListRelationFilter } from "../../userProject/base/UserProjectListRelationFilter";
+import { TaskListRelationFilter } from "../../task/base/TaskListRelationFilter";
+import { UserTaskListRelationFilter } from "../../userTask/base/UserTaskListRelationFilter";
 
 @InputType()
 class UserWhereInput {
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
+    type: StringFilter,
   })
-  @Type(() => StringNullableFilter)
+  @Type(() => StringFilter)
   @IsOptional()
-  @Field(() => StringNullableFilter, {
+  @Field(() => StringFilter, {
     nullable: true,
   })
-  email?: StringNullableFilter;
+  id?: StringFilter;
 
   @ApiProperty({
     required: false,
@@ -40,17 +42,6 @@ class UserWhereInput {
     nullable: true,
   })
   firstName?: StringNullableFilter;
-
-  @ApiProperty({
-    required: false,
-    type: StringFilter,
-  })
-  @Type(() => StringFilter)
-  @IsOptional()
-  @Field(() => StringFilter, {
-    nullable: true,
-  })
-  id?: StringFilter;
 
   @ApiProperty({
     required: false,
@@ -76,6 +67,17 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  email?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
     type: () => UserProjectListRelationFilter,
   })
   @ValidateNested()
@@ -85,6 +87,30 @@ class UserWhereInput {
     nullable: true,
   })
   userProjects?: UserProjectListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => TaskListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => TaskListRelationFilter)
+  @IsOptional()
+  @Field(() => TaskListRelationFilter, {
+    nullable: true,
+  })
+  tasks?: TaskListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserTaskListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => UserTaskListRelationFilter)
+  @IsOptional()
+  @Field(() => UserTaskListRelationFilter, {
+    nullable: true,
+  })
+  userTasks?: UserTaskListRelationFilter;
 }
 
 export { UserWhereInput as UserWhereInput };

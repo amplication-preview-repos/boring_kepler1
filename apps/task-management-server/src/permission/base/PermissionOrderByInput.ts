@@ -28,6 +28,17 @@ class PermissionOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  id?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   createdAt?: SortOrder;
 
   @ApiProperty({
@@ -39,18 +50,7 @@ class PermissionOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  description?: SortOrder;
-
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @IsOptional()
-  @IsEnum(SortOrder)
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
-  id?: SortOrder;
+  updatedAt?: SortOrder;
 
   @ApiProperty({
     required: false,
@@ -72,7 +72,7 @@ class PermissionOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  roleId?: SortOrder;
+  description?: SortOrder;
 
   @ApiProperty({
     required: false,
@@ -83,7 +83,7 @@ class PermissionOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  updatedAt?: SortOrder;
+  roleId?: SortOrder;
 }
 
 export { PermissionOrderByInput as PermissionOrderByInput };

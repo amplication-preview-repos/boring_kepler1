@@ -1,10 +1,10 @@
 import { SortOrder } from "../../util/SortOrder";
 
 export type ProjectOrderByInput = {
-  createdAt?: SortOrder;
-  description?: SortOrder;
   id?: SortOrder;
+  createdAt?: SortOrder;
+  updatedAt?: SortOrder;
+  description?: SortOrder;
   name?: SortOrder;
   owner?: SortOrder;
-  updatedAt?: SortOrder;
 };

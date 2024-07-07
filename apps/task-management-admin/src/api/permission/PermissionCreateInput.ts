@@ -1,7 +1,7 @@
 import { RoleWhereUniqueInput } from "../role/RoleWhereUniqueInput";
 
 export type PermissionCreateInput = {
-  description?: string | null;
   name?: string | null;
+  description?: string | null;
   role?: RoleWhereUniqueInput | null;
 };

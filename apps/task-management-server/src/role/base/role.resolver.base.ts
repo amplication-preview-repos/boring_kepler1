@@ -26,10 +26,10 @@ import { RoleFindUniqueArgs } from "./RoleFindUniqueArgs";
 import { CreateRoleArgs } from "./CreateRoleArgs";
 import { UpdateRoleArgs } from "./UpdateRoleArgs";
 import { DeleteRoleArgs } from "./DeleteRoleArgs";
-import { PermissionFindManyArgs } from "../../permission/base/PermissionFindManyArgs";
-import { Permission } from "../../permission/base/Permission";
 import { UserProjectFindManyArgs } from "../../userProject/base/UserProjectFindManyArgs";
 import { UserProject } from "../../userProject/base/UserProject";
+import { PermissionFindManyArgs } from "../../permission/base/PermissionFindManyArgs";
+import { Permission } from "../../permission/base/Permission";
 import { RoleService } from "../role.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Role)
@@ -137,26 +137,6 @@ export class RoleResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [Permission], { name: "permissions" })
-  @nestAccessControl.UseRoles({
-    resource: "Permission",
-    action: "read",
-    possession: "any",
-  })
-  async findPermissions(
-    @graphql.Parent() parent: Role,
-    @graphql.Args() args: PermissionFindManyArgs
-  ): Promise<Permission[]> {
-    const results = await this.service.findPermissions(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [UserProject], { name: "userProjects" })
   @nestAccessControl.UseRoles({
     resource: "UserProject",
@@ -168,6 +148,26 @@ export class RoleResolverBase {
     @graphql.Args() args: UserProjectFindManyArgs
   ): Promise<UserProject[]> {
     const results = await this.service.findUserProjects(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Permission], { name: "permissions" })
+  @nestAccessControl.UseRoles({
+    resource: "Permission",
+    action: "read",
+    possession: "any",
+  })
+  async findPermissions(
+    @graphql.Parent() parent: Role,
+    @graphql.Args() args: PermissionFindManyArgs
+  ): Promise<Permission[]> {
+    const results = await this.service.findPermissions(parent.id, args);
 
     if (!results) {
       return [];

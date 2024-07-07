@@ -11,18 +11,30 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
+import { UserProjectUpdateManyWithoutRolesInput } from "./UserProjectUpdateManyWithoutRolesInput";
 import {
+  ValidateNested,
+  IsOptional,
   IsString,
   MaxLength,
-  IsOptional,
-  ValidateNested,
 } from "class-validator";
-import { PermissionUpdateManyWithoutRolesInput } from "./PermissionUpdateManyWithoutRolesInput";
 import { Type } from "class-transformer";
-import { UserProjectUpdateManyWithoutRolesInput } from "./UserProjectUpdateManyWithoutRolesInput";
+import { PermissionUpdateManyWithoutRolesInput } from "./PermissionUpdateManyWithoutRolesInput";
 
 @InputType()
 class RoleUpdateInput {
+  @ApiProperty({
+    required: false,
+    type: () => UserProjectUpdateManyWithoutRolesInput,
+  })
+  @ValidateNested()
+  @Type(() => UserProjectUpdateManyWithoutRolesInput)
+  @IsOptional()
+  @Field(() => UserProjectUpdateManyWithoutRolesInput, {
+    nullable: true,
+  })
+  userProjects?: UserProjectUpdateManyWithoutRolesInput;
+
   @ApiProperty({
     required: false,
     type: String,
@@ -46,18 +58,6 @@ class RoleUpdateInput {
     nullable: true,
   })
   permissions?: PermissionUpdateManyWithoutRolesInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserProjectUpdateManyWithoutRolesInput,
-  })
-  @ValidateNested()
-  @Type(() => UserProjectUpdateManyWithoutRolesInput)
-  @IsOptional()
-  @Field(() => UserProjectUpdateManyWithoutRolesInput, {
-    nullable: true,
-  })
-  userProjects?: UserProjectUpdateManyWithoutRolesInput;
 }
 
 export { RoleUpdateInput as RoleUpdateInput };

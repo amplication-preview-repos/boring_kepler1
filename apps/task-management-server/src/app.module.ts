@@ -4,6 +4,8 @@ import { ProjectModule } from "./project/project.module";
 import { PermissionModule } from "./permission/permission.module";
 import { UserProjectModule } from "./userProject/userProject.module";
 import { UserModule } from "./user/user.module";
+import { TaskModule } from "./task/task.module";
+import { UserTaskModule } from "./userTask/userTask.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -26,6 +28,8 @@ import { AuthModule } from "./auth/auth.module";
     PermissionModule,
     UserProjectModule,
     UserModule,
+    TaskModule,
+    UserTaskModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,

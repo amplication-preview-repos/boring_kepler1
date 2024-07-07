@@ -52,6 +52,12 @@ export class UserProjectControllerBase {
       data: {
         ...data,
 
+        user: data.user
+          ? {
+              connect: data.user,
+            }
+          : undefined,
+
         project: data.project
           ? {
               connect: data.project,
@@ -63,16 +69,17 @@ export class UserProjectControllerBase {
               connect: data.role,
             }
           : undefined,
-
-        user: data.user
-          ? {
-              connect: data.user,
-            }
-          : undefined,
       },
       select: {
-        createdAt: true,
         id: true,
+        createdAt: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
 
         project: {
           select: {
@@ -81,14 +88,6 @@ export class UserProjectControllerBase {
         },
 
         role: {
-          select: {
-            id: true,
-          },
-        },
-
-        updatedAt: true,
-
-        user: {
           select: {
             id: true,
           },
@@ -114,8 +113,15 @@ export class UserProjectControllerBase {
     return this.service.userProjects({
       ...args,
       select: {
-        createdAt: true,
         id: true,
+        createdAt: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
 
         project: {
           select: {
@@ -124,14 +130,6 @@ export class UserProjectControllerBase {
         },
 
         role: {
-          select: {
-            id: true,
-          },
-        },
-
-        updatedAt: true,
-
-        user: {
           select: {
             id: true,
           },
@@ -158,8 +156,15 @@ export class UserProjectControllerBase {
     const result = await this.service.userProject({
       where: params,
       select: {
-        createdAt: true,
         id: true,
+        createdAt: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
 
         project: {
           select: {
@@ -168,14 +173,6 @@ export class UserProjectControllerBase {
         },
 
         role: {
-          select: {
-            id: true,
-          },
-        },
-
-        updatedAt: true,
-
-        user: {
           select: {
             id: true,
           },
@@ -212,6 +209,12 @@ export class UserProjectControllerBase {
         data: {
           ...data,
 
+          user: data.user
+            ? {
+                connect: data.user,
+              }
+            : undefined,
+
           project: data.project
             ? {
                 connect: data.project,
@@ -223,16 +226,17 @@ export class UserProjectControllerBase {
                 connect: data.role,
               }
             : undefined,
-
-          user: data.user
-            ? {
-                connect: data.user,
-              }
-            : undefined,
         },
         select: {
-          createdAt: true,
           id: true,
+          createdAt: true,
+          updatedAt: true,
+
+          user: {
+            select: {
+              id: true,
+            },
+          },
 
           project: {
             select: {
@@ -241,14 +245,6 @@ export class UserProjectControllerBase {
           },
 
           role: {
-            select: {
-              id: true,
-            },
-          },
-
-          updatedAt: true,
-
-          user: {
             select: {
               id: true,
             },
@@ -283,8 +279,15 @@ export class UserProjectControllerBase {
       return await this.service.deleteUserProject({
         where: params,
         select: {
-          createdAt: true,
           id: true,
+          createdAt: true,
+          updatedAt: true,
+
+          user: {
+            select: {
+              id: true,
+            },
+          },
 
           project: {
             select: {
@@ -293,14 +296,6 @@ export class UserProjectControllerBase {
           },
 
           role: {
-            select: {
-              id: true,
-            },
-          },
-
-          updatedAt: true,
-
-          user: {
             select: {
               id: true,
             },

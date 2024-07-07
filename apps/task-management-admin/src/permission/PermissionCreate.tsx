@@ -13,8 +13,8 @@ export const PermissionCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <TextInput label="description" multiline source="description" />
         <TextInput label="name" source="name" />
+        <TextInput label="description" multiline source="description" />
         <ReferenceInput source="role.id" reference="Role" label="role">
           <SelectInput optionText={RoleTitle} />
         </ReferenceInput>

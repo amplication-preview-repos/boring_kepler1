@@ -1,11 +1,11 @@
 import { StringFilter } from "../../util/StringFilter";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 import { ProjectWhereUniqueInput } from "../project/ProjectWhereUniqueInput";
 import { RoleWhereUniqueInput } from "../role/RoleWhereUniqueInput";
-import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type UserProjectWhereInput = {
   id?: StringFilter;
+  user?: UserWhereUniqueInput;
   project?: ProjectWhereUniqueInput;
   role?: RoleWhereUniqueInput;
-  user?: UserWhereUniqueInput;
 };

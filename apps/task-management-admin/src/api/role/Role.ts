@@ -1,11 +1,11 @@
-import { Permission } from "../permission/Permission";
 import { UserProject } from "../userProject/UserProject";
+import { Permission } from "../permission/Permission";
 
 export type Role = {
-  createdAt: Date;
   id: string;
-  name: string | null;
-  permissions?: Array<Permission>;
+  createdAt: Date;
   updatedAt: Date;
   userProjects?: Array<UserProject>;
+  name: string | null;
+  permissions?: Array<Permission>;
 };

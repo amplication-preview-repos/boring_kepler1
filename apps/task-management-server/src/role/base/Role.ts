@@ -12,18 +12,26 @@ https://docs.amplication.com/how-to/custom-code
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import {
-  IsDate,
   IsString,
-  MaxLength,
-  IsOptional,
+  IsDate,
   ValidateNested,
+  IsOptional,
+  MaxLength,
 } from "class-validator";
 import { Type } from "class-transformer";
-import { Permission } from "../../permission/base/Permission";
 import { UserProject } from "../../userProject/base/UserProject";
+import { Permission } from "../../permission/base/Permission";
 
 @ObjectType()
 class Role {
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  id!: string;
+
   @ApiProperty({
     required: true,
   })
@@ -34,11 +42,20 @@ class Role {
 
   @ApiProperty({
     required: true,
-    type: String,
   })
-  @IsString()
-  @Field(() => String)
-  id!: string;
+  @IsDate()
+  @Type(() => Date)
+  @Field(() => Date)
+  updatedAt!: Date;
+
+  @ApiProperty({
+    required: false,
+    type: () => [UserProject],
+  })
+  @ValidateNested()
+  @Type(() => UserProject)
+  @IsOptional()
+  userProjects?: Array<UserProject>;
 
   @ApiProperty({
     required: false,
@@ -60,23 +77,6 @@ class Role {
   @Type(() => Permission)
   @IsOptional()
   permissions?: Array<Permission>;
-
-  @ApiProperty({
-    required: true,
-  })
-  @IsDate()
-  @Type(() => Date)
-  @Field(() => Date)
-  updatedAt!: Date;
-
-  @ApiProperty({
-    required: false,
-    type: () => [UserProject],
-  })
-  @ValidateNested()
-  @Type(() => UserProject)
-  @IsOptional()
-  userProjects?: Array<UserProject>;
 }
 
 export { Role as Role };

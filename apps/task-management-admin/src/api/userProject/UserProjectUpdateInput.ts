@@ -1,9 +1,9 @@
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 import { ProjectWhereUniqueInput } from "../project/ProjectWhereUniqueInput";
 import { RoleWhereUniqueInput } from "../role/RoleWhereUniqueInput";
-import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type UserProjectUpdateInput = {
+  user?: UserWhereUniqueInput | null;
   project?: ProjectWhereUniqueInput | null;
   role?: RoleWhereUniqueInput | null;
-  user?: UserWhereUniqueInput | null;
 };
